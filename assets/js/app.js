@@ -1,23 +1,23 @@
 // @TODO: YOUR CODE HERE!
-function makeResponsive() {
-    let svgWidth = 960;
-    let svgHeight = 500;
-    let margin = {
-    top: 20,
-    right: 40,
-    bottom: 80,
-    left:100
+//function makeResponsive() {
+    var svgWidth = 960;
+    var svgHeight = 500;
+    var margin = {
+        top: 20,
+        right: 40,
+        bottom: 60,
+        left:50
     };
-    let width = svgWidth - margin.left - margin.right;
-    let height = svgHeight - margin.top - margin.bottom;
+    var width = svgWidth - margin.left - margin.right;
+    var height = svgHeight - margin.top - margin.bottom;
 
     // SVG Attributes
-    let svg = d3.select("#scatter")
+    var svg = d3.select("#scatter")
         .append("svg")
         .attr("width", svgWidth)
         .attr("height", svgHeight);
     
-    let chartGroup = svg.append("g")
+    var chartGroup = svg.append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
     
     //Retrieve data from CSV
@@ -32,16 +32,16 @@ function makeResponsive() {
             data.income = +data.income;
         });
     //x and y scales
-        let xLinearScale = d3.scaleLinear()
+        const xLinearScale = d3.scaleLinear()
             .domain([8.5, d3.max(demographics, d => d.poverty)])
             .range([0, width]);
-        let yLinearScale = d3.scaleLinear()
+        const yLinearScale = d3.scaleLinear()
             .domain([3.5, d3.max(demographics, d => d.healthcare)])
             .range([height, 0]);
     
     //define x y axis
-        let xAxis = d3.axisBottom(xLinearScale);
-        let yAxis = d3.axisLeft(yLinearScale);
+        const xAxis = d3.axisBottom(xLinearScale);
+        const yAxis = d3.axisLeft(yLinearScale);
     
         chartGroup.append("g")
         .attr("transform", `translate(0, ${height})`)
@@ -51,14 +51,14 @@ function makeResponsive() {
         .call(yAxis);
         
     //Define circles
-        let circles = chartGroup.selectAll("circle")
+        chartGroup.selectAll("circle")
             .data(demographics)
             .enter()
             .append("circle")
             .attr("cx", d => xLinearScale(d.poverty))
             .attr("cy", d => yLinearScale(d.healthcare))
             .attr("r", 10)
-            .attr("fill", "lightblue")
+            .attr("fill", "blue")
             .attr("opacity", ".6")
             .attr("stroke-width", "1")
             .attr("stroke", "black");
@@ -92,5 +92,5 @@ function makeResponsive() {
           .text("In Poverty (%)");
     
     });
-    } 
-    makeResponsive();
+    //} 
+    //makeResponsive();
