@@ -1,5 +1,4 @@
 // @TODO: YOUR CODE HERE!
-//function makeResponsive() {
     var svgWidth = 960;
     var svgHeight = 500;
     var margin = {
@@ -12,7 +11,8 @@
     var height = svgHeight - margin.top - margin.bottom;
 
     // SVG Attributes
-    var svg = d3.select("#scatter")
+    var svg = d3
+        .select("#scatter")
         .append("svg")
         .attr("width", svgWidth)
         .attr("height", svgHeight);
@@ -21,8 +21,7 @@
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
     
     //Retrieve data from CSV
-    d3.csv("assets/data/data.csv")
-        .then(function(demographics){
+    d3.csv("assets/data/data.csv").then(function(demographics){
         demographics.forEach(function(data) {
             data.age = +data.age;
             data.smokes = +data.smokes;
@@ -32,16 +31,16 @@
             data.income = +data.income;
         });
     //x and y scales
-        const xLinearScale = d3.scaleLinear()
+        const xScale = d3.scaleLinear()
             .domain([8.5, d3.max(demographics, d => d.poverty)])
             .range([0, width]);
-        const yLinearScale = d3.scaleLinear()
+        const yScale = d3.scaleLinear()
             .domain([3.5, d3.max(demographics, d => d.healthcare)])
             .range([height, 0]);
     
     //define x y axis
-        const xAxis = d3.axisBottom(xLinearScale);
-        const yAxis = d3.axisLeft(yLinearScale);
+        const xAxis = d3.axisBottom(xScale);
+        const yAxis = d3.axisLeft(yScale);
     
         chartGroup.append("g")
         .attr("transform", `translate(0, ${height})`)
@@ -55,8 +54,8 @@
             .data(demographics)
             .enter()
             .append("circle")
-            .attr("cx", d => xLinearScale(d.poverty))
-            .attr("cy", d => yLinearScale(d.healthcare))
+            .attr("cx", d => xScale(d.poverty))
+            .attr("cy", d => yScale(d.healthcare))
             .attr("r", 10)
             .attr("fill", "blue")
             .attr("opacity", ".6")
@@ -69,8 +68,8 @@
             .enter()
             .append("text")
             .text(d => d.abbr)
-            .attr("x", d => xLinearScale(d.poverty))
-            .attr("y", d => yLinearScale(d.healthcare))
+            .attr("x", d => xScale(d.poverty))
+            .attr("y", d => yScale(d.healthcare))
             .attr("dy",-395)
             .attr("text-anchor", "middle")
             .attr("font-size", "12px")
@@ -91,6 +90,6 @@
           .attr("class", "axisText")
           .text("In Poverty (%)");
     
-    });
-    //} 
-    //makeResponsive();
+    }).catch(function(error) {
+        console.log(error);
+      });
