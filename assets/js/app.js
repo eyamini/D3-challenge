@@ -1,5 +1,5 @@
 // @TODO: YOUR CODE HERE!
-function execute() {
+function makeResponsive() {
     var svgWidth = 960;
     var svgHeight = 500;
     var margin = {
@@ -93,4 +93,4 @@ function execute() {
     
     });
     } 
-    execute();
+    makeResponsive();
